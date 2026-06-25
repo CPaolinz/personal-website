@@ -16,13 +16,15 @@ export const projectId = assertValue(
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-02-27'
 
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
-  if (v === undefined) {
+function assertValue<T>(v: T | undefined | string, errorMessage: string): T {
+  // Checks if the value is missing, null, undefined, or an empty string
+  if (!v) {
     throw new Error(errorMessage)
   }
 
-  return v
+  return v as T
 }
+
 /**
  * Used to configure edit intent links, for Presentation Mode, as well as to configure where the Studio is mounted in the router.
  */
