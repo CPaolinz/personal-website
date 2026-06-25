@@ -1,3 +1,5 @@
+// /Users/cecilia/personal-website/app/(website)/[slug]/page.tsx
+
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {Header} from '@/components/Header'
 import ImageBox from '@/components/ImageBox'
@@ -28,6 +30,12 @@ export async function generateStaticParams() {
     query: slugsByTypeQuery,
     params: {type: 'page'} satisfies SlugsByTypeQueryParams,
   })
+  
+  // FIX: If Sanity has no pages yet, return a fallback parameter to prevent EmptyGenerateStaticParamsError
+  if (!data || data.length === 0) {
+    return [{slug: 'fallback-placeholder'}]
+  }
+
   return data
 }
 
