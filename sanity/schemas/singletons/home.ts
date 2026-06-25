@@ -1,6 +1,6 @@
 // /Users/cecilia/personal-website/sanity/schemas/singletons/home.ts
 
-import {HomeIcon, ImageIcon} from '@sanity/icons'
+import {HomeIcon, ImageIcon, DocumentIcon} from '@sanity/icons' // Imported DocumentIcon for the file block
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
@@ -86,6 +86,34 @@ export default defineType({
               description: 'Alternative text for screenreaders. Falls back on caption if not set',
             }),
           ],
+        }),
+        // ADDED: Downloadable File object definition
+        defineField({
+          type: 'file',
+          icon: DocumentIcon,
+          name: 'downloadFile',
+          title: 'Downloadable File',
+          fields: [
+            defineField({
+              name: 'label',
+              type: 'string',
+              title: 'Link Text',
+              description: 'Text shown on the download link/button (e.g., "Download Resume")',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'label',
+              filename: 'asset.originalFilename',
+            },
+            prepare({title, filename}) {
+              return {
+                title: title || 'Downloadable File',
+                subtitle: filename || 'No file attached',
+              }
+            },
+          },
         }),
       ],
     }),

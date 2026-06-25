@@ -1,3 +1,5 @@
+// /Users/cecilia/personal-website/sanity/lib/client.ts
+
 import {apiVersion, dataset, projectId, studioUrl} from '@/sanity/lib/api'
 import {createClient} from 'next-sanity'
 

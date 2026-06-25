@@ -1,3 +1,5 @@
+// /Users/cecilia/personal-website/components/CustomPortableText.tsx
+
 import ImageBox from '@/components/ImageBox'
 import {TimelineSection} from '@/components/TimelineSection'
 import type {PathSegment} from '@sanity/client/csm'

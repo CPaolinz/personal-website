@@ -1,3 +1,5 @@
+// /Users/cecilia/personal-website/components/TimelineSection.tsx
+
 import {TimelineItem} from '@/components/TimelineItem'
 import type {Milestone} from '@/sanity.types'
 import {studioUrl} from '@/sanity/lib/api'

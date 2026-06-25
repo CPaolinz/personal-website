@@ -1,3 +1,5 @@
+// /Users/cecilia/personal-website/components/TimelineItem.tsx
+
 import ImageBox from '@/components/ImageBox'
 import type {Milestone} from '@/sanity.types'
 
