@@ -1,5 +1,8 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {Header} from '@/components/Header'
+import ImageBox from '@/components/ImageBox'
+import {OptimisticSortOrder} from '@/components/OptimisticSortOrder'
+import {studioUrl} from '@/sanity/lib/api'
 import {
   getDynamicFetchOptions,
   sanityFetch,
@@ -8,11 +11,17 @@ import {
   type DynamicFetchOptions,
 } from '@/sanity/lib/live'
 import {slugsByTypeQuery, type SlugsByTypeQueryParams} from '@/sanity/lib/queries'
+import {resolveHref} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
-import {defineQuery} from 'next-sanity'
+import {createDataAttribute, defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
+import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
+
+type PageProps<T extends string> = {
+  params: Promise<{slug: string}>
+}
 
 export async function generateStaticParams() {
   const {data} = await sanityFetchStaticParams({
@@ -73,39 +82,106 @@ async function CachedSlugPage({
     *[_type == "page" && slug.current == $slug][0] {
       _id,
       _type,
-      body,
       overview,
       title,
       "slug": slug.current,
+      showcaseProjects[]{
+        _key,
+        ...@->{
+          _id,
+          _type,
+          coverImage,
+          overview,
+          "slug": slug.current,
+          tags,
+          title,
+        }
+      },
     }
   `)
   const {data} = await sanityFetch({query: slugPageQuery, params: {slug}, perspective, stega})
 
-  if (!data?._id) notFound()
+  // Cast here immediately to avoid Property '_id' does not exist on type '{}'
+  const pageData = data as any
 
-  const {body, overview, title} = data ?? {}
+  if (!pageData?._id) notFound()
+
+  const {_id, _type, overview, title, showcaseProjects = []} = pageData
+
+  const dataAttribute =
+    _id && _type
+      ? createDataAttribute({
+          baseUrl: studioUrl,
+          id: _id,
+          type: _type,
+        })
+      : null
 
   return (
-    <>
+    <div className="space-y-20">
       {/* Header */}
       <Header
-        id={data?._id || null}
-        type={data?._type || null}
+        id={_id || null}
+        type={_type || null}
         path={['overview']}
         title={title || 'Untitled'}
         description={overview}
       />
 
-      {/* Body */}
-      {Array.isArray(body) && (
-        <CustomPortableText
-          id={data?._id || null}
-          type={data?._type || null}
-          path={['body']}
-          paragraphClasses="font-serif max-w-3xl text-gray-600 text-xl"
-          value={body}
-        />
-      )}
-    </>
+      {/* Showcase projects */}
+      <div className="mx-auto max-w-[100rem] rounded-md border">
+        <OptimisticSortOrder id={_id} path={'showcaseProjects'}>
+          {showcaseProjects &&
+            showcaseProjects.length > 0 &&
+            showcaseProjects.map((project: any) => {
+              const href = resolveHref(project?._type, project?.slug)
+              if (!href) return null
+              
+              return (
+                <Link
+                  className="flex flex-col gap-x-5 p-2 transition odd:border-b odd:border-t hover:bg-gray-50/50 xl:flex-row odd:xl:flex-row-reverse"
+                  key={project._key}
+                  href={href}
+                  data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
+                >
+                  <div className="w-full xl:w-9/12">
+                    <ImageBox
+                      image={project.coverImage}
+                      alt={`Cover image from ${project.title}`}
+                      classesWrapper="relative aspect-[16/9]"
+                    />
+                  </div>
+                  <div className="flex xl:w-1/4">
+                    <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0">
+                      <div>
+                        <div className="mb-2 text-xl font-extrabold tracking-tight md:text-2xl">
+                          {project.title}
+                        </div>
+                        {Array.isArray(project.overview) && (
+                          <div className="font-serif text-gray-500">
+                            <CustomPortableText
+                              id={project._id}
+                              type={project._type}
+                              path={['overview']}
+                              value={project.overview}
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="mt-4 flex flex-row gap-x-2">
+                        {project.tags?.map((tag: string, key: number) => (
+                          <div className="text-sm font-medium lowercase md:text-lg" key={key}>
+                            #{tag}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+        </OptimisticSortOrder>
+      </div>
+    </div>
   )
 }

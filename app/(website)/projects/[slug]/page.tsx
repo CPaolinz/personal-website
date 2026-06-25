@@ -18,6 +18,10 @@ import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
 
+type PageProps<T extends string> = {
+  params: Promise<{slug: string}>
+}
+
 export async function generateStaticParams() {
   const {data} = await sanityFetchStaticParams({
     query: slugsByTypeQuery,
@@ -126,17 +130,14 @@ async function CachedProjectSlugPage({
       />
 
       <div className="rounded-md border">
-        {/* Image  */}
         <ImageBox
           data-sanity={dataAttribute?.('coverImage')}
           image={coverImage}
-          // @TODO add alt field in schema
           alt=""
           classesWrapper="relative aspect-[16/9]"
         />
 
         <div className="divide-inherit grid grid-cols-1 divide-y lg:grid-cols-4 lg:divide-x lg:divide-y-0">
-          {/* Duration */}
           {!!(startYear && endYear) && (
             <div className="p-3 lg:p-4">
               <div className="text-xs md:text-sm">Duration</div>
@@ -148,7 +149,6 @@ async function CachedProjectSlugPage({
             </div>
           )}
 
-          {/* Client */}
           {client && (
             <div className="p-3 lg:p-4">
               <div className="text-xs md:text-sm">Client</div>
@@ -156,19 +156,15 @@ async function CachedProjectSlugPage({
             </div>
           )}
 
-          {/* Site */}
           {site && (
             <div className="p-3 lg:p-4">
               <div className="text-xs md:text-sm">Site</div>
-              {site && (
-                <Link target="_blank" className="text-md break-words md:text-lg" href={site}>
-                  {site}
-                </Link>
-              )}
+              <Link target="_blank" className="text-md break-words md:text-lg" href={site}>
+                {site}
+              </Link>
             </div>
           )}
 
-          {/* Tags */}
           <div className="p-3 lg:p-4">
             <div className="text-xs md:text-sm">Tags</div>
             <div className="text-md flex flex-row flex-wrap md:text-lg">

@@ -1,7 +1,9 @@
+// /Users/cecilia/personal-website/app/(website)/layout.tsx
+
 import '@/styles/index.css'
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {Navbar} from '@/components/Navbar'
-import IntroTemplate from '@/intro-template'
+// import IntroTemplate from '@/intro-template'
 import {
   getDynamicFetchOptions,
   sanityFetch,
@@ -66,9 +68,9 @@ export default async function PersonalLayout({children}: LayoutProps<'/'>) {
         ) : (
           <CachedFooter perspective="published" stega={false} />
         )}
-        <Suspense>
+        {/* <Suspense>
           <IntroTemplate />
-        </Suspense>
+        </Suspense> */}
       </div>
       <Toaster />
       <SanityLive onError={handleError} includeDrafts={isDraftMode} />
