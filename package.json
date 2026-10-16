@@ -1,0 +1,23 @@
+{
+  "name": "cecilia-paolini-portfolio",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc --noEmit",
+    "sync-assets": "node scripts/fetch-assets.mjs",
+    "predev": "npm run sync-assets",
+    "prebuild": "npm run sync-assets"
+  },
+  "dependencies": {
+    "next": "^16.4.2",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.4",
+    "@types/react": "19.2.17",
+    "typescript": "5.9.3"
+  }
+}

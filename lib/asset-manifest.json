@@ -1,0 +1,14 @@
+{
+  "portrait": "/assets/images/cecilia-portrait.webp",
+  "logos": {
+    "precisionPortal": "/assets/logos/precision-portal.jpg",
+    "beforepay": "/assets/logos/beforepay.jpg",
+    "macquarie": "/assets/logos/macquarie.jpg",
+    "oltreImpact": "/assets/logos/oltre_impact_logo.jpg",
+    "mvConsulting": "/assets/logos/mv_consulting_logo.jpg",
+    "haierEurope": "/assets/logos/haier_europe_logo.jpg",
+    "cattolica": "/assets/logos/cattolica.jpg",
+    "uclaExtension": "/assets/logos/ucla-extension.jpg",
+    "politecnico": "/assets/logos/polimi_logo.jpg"
+  }
+}
