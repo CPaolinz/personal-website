@@ -196,6 +196,10 @@ export const projects = [
       'Worked with weekly data spanning 2003–2023 across US and euro-area banks',
       'Examined trade-offs between historical fit and forward-looking prediction',
     ],
+    downloads: [
+      { href: '/downloads/systemic-risk-presentation.pdf', label: 'Download presentation' },
+      { href: '/downloads/systemic-risk-thesis.pdf', label: 'Download full thesis' },
+    ],
   },
   {
     slug: 'benchmark-neutral-allocations',
@@ -214,6 +218,55 @@ export const projects = [
       'Applied factor extraction and multicollinearity checks to market data',
       'Explored signals across technology, healthcare, consumer, finance, and energy',
     ],
+    researchSections: [
+      {
+        title: 'Objective',
+        paragraphs: [
+          'This strategy tracks a market-capitalisation-weighted benchmark while introducing targeted factor and sector tilts. The goal is to express investor preferences without materially drifting from the benchmark.',
+        ],
+      },
+      {
+        title: 'Methodology & framework',
+        paragraphs: [
+          'The optimisation minimises tracking error and a factor-tilt penalty. Tracking error measures active risk relative to the benchmark, while the penalty controls the distance between realised and target factor exposures.',
+          'The portfolio is fully invested, with long-short flexibility represented by individual weights between -1 and 1.',
+        ],
+        bullets: [
+          'Tracking error: (w - wb)^T Sigma (w - wb)',
+          'Factor penalty: lambda_tilt times the squared distance from target exposures',
+        ],
+      },
+      {
+        title: 'Data & factor construction',
+        paragraphs: [
+          'Price and market-capitalisation data are collected dynamically through a custom market_data module using Yahoo Finance. The universe contains the ten largest companies across technology, healthcare, consumer, finance, and energy, covering January 2020 to February 2025.',
+          'A Tucker factor model uses singular value decomposition to reduce dimensionality while preserving 86.52% of the dataset variance. A variance inflation factor filter removes redundant signals above a threshold of 10.',
+        ],
+        bullets: [
+          'Tucker factors capture structural, macro-level drivers of stock behaviour',
+          'Industry-relative reversal measures 21-day returns against industry averages',
+          'Industry momentum captures trailing peer trends',
+          'Seasonality measures recurring calendar-month patterns over a rolling history',
+        ],
+      },
+      {
+        title: 'Sector insights',
+        paragraphs: [
+          'The tilt intensity parameter lambda controls the balance between benchmark tracking and active factor exposure. The useful range varies by sector: technology is most sensitive to momentum anomalies, healthcare to risk and quality, consumer to size and value, finance to seasonality, and energy to mean reversion.',
+        ],
+        bullets: [
+          'Technology: lambda below 3',
+          'Healthcare: lambda between 2 and 3',
+          'Consumer: lambda between 2 and 6',
+          'Finance: lambda between 4 and 8',
+          'Energy: lambda between 2.5 and 7.5',
+        ],
+      },
+    ],
+    download: {
+      href: '/downloads/laboratory-of-data-analytics-for-investing.pdf',
+      label: 'Download group project presentation',
+    },
   },
 ]
 
