@@ -171,7 +171,7 @@ export const projects = [
     category: 'Mining technology',
     tags: ['Constraint optimisation', 'TypeScript', 'Scheduling', 'Product design'],
     art: 'mining',
-    live: 'https://mining-development-dashboard.vercel.app',
+    live: 'https://www.dashboardmining.com',
     liveLabel: 'Explore live prototype',
     highlights: [
       'Minute-by-minute stage progression and shift coordination',
