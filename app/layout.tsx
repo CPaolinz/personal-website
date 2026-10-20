@@ -1,5 +1,6 @@
 import './globals.css'
 import assetManifest from '@/lib/asset-manifest.json'
+import { Analytics } from '@vercel/analytics/next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 
@@ -27,7 +28,10 @@ export const viewport: Viewport = { themeColor: '#f7f5f0', width: 'device-width'
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
