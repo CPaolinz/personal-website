@@ -1,5 +1,5 @@
 :root {
-  --paper: #f7f5f0;
+  --paper: #ffffff;
   --paper-deep: #ede9e0;
   --ink: #222623;
   --ink-soft: #4f554f;
@@ -23,7 +23,7 @@ img { display: block; max-width: 100%; }
 
 .site-shell { min-height: 100vh; overflow: clip; }
 .page-wrap, .header-inner, .footer-inner { width: min(1312px, calc(100% - 104px)); margin-inline: auto; }
-.site-header { position: sticky; top: 0; z-index: 50; background: rgb(247 245 240 / 92%); border-bottom: 1px solid rgb(34 38 35 / 8%); backdrop-filter: blur(16px); }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / 92%); border-bottom: 1px solid rgb(34 38 35 / 8%); backdrop-filter: blur(16px); }
 .header-inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .wordmark, .footer-name { font-family: var(--serif); font-weight: 400; letter-spacing: -.04em; font-size: 25px; white-space: nowrap; }
 .wordmark-period, .footer-name span { color: var(--clay); }
@@ -449,7 +449,7 @@ img { display: block; max-width: 100%; }
 
 /* Editorial refinement: clearer hierarchy, real portrait and brand marks. */
 :root {
-  --paper: #f8f6f1;
+  --paper: #ffffff;
   --paper-deep: #efede6;
   --ink: #202522;
   --ink-soft: #4e564f;
